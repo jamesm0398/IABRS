@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="iabrss" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network\ Application\ Design\\Assignment5_Prof_of_Con\\working_CopyV2\\IABRS\\IABRS\\obj\\Release\\netcoreapp2\.2\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>
