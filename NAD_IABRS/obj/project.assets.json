@@ -12735,11 +12735,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\NAD_IABRS\\NAD_IABRS\\NAD_IABRS.csproj",
+      "projectUniqueName": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\NAD_IABRS\\NAD_IABRS.csproj",
       "projectName": "NAD_IABRS",
-      "projectPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\NAD_IABRS\\NAD_IABRS\\NAD_IABRS.csproj",
+      "projectPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\NAD_IABRS\\NAD_IABRS.csproj",
       "packagesPath": "C:\\Users\\JohnCPLaptop\\.nuget\\packages\\",
-      "outputPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\NAD_IABRS\\NAD_IABRS\\obj\\",
+      "outputPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\NAD_IABRS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
