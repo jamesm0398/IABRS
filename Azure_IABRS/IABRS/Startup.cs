@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*###############################################################
+ *  File:           Startup.cs
+ *  Project :       NAD Assignment 4
+ *  Programmer :    John Hall, James Milne
+ *  Date :          11/10/2019
+ *  
+ *  Name:           Startup
+ *  Purpose:        Handles setting all web apps settings on start up 
+ * ##############################################################*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +23,10 @@ namespace IABRS
 {
     public class Startup
     {
+        /// <summary>
+        /// Sets the config on start 
+        /// </summary>
+        /// <param name="configuration">config params</param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,7 +34,11 @@ namespace IABRS
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. 
+        /// Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -35,7 +52,12 @@ namespace IABRS
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">this application</param>
+        /// <param name="env">the host environment</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

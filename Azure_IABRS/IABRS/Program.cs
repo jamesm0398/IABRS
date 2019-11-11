@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*###############################################################
+ *  File:           Program.cs
+ *  Project :       NAD Assignment 4
+ *  Programmer :    John Hall, James Milne
+ *  Date :          11/10/2019
+ *  
+ *  Name:           Program
+ *  Purpose:        Handles the entry point of the application
+ * ##############################################################*/
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +21,10 @@ namespace IABRS
 {
     public class Program
     {
+        /// <summary>
+        /// Application entry point
+        /// </summary>
+        /// <param name="args">arguments passed into the application</param>
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();

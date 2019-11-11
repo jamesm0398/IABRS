@@ -13053,11 +13053,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_CopyV2\\IABRS\\IABRS\\IABRS.csproj",
+      "projectUniqueName": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\Azure_IABRS\\IABRS\\IABRS.csproj",
       "projectName": "IABRS",
-      "projectPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_CopyV2\\IABRS\\IABRS\\IABRS.csproj",
+      "projectPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\Azure_IABRS\\IABRS\\IABRS.csproj",
       "packagesPath": "C:\\Users\\JohnCPLaptop\\.nuget\\packages\\",
-      "outputPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_CopyV2\\IABRS\\IABRS\\obj\\",
+      "outputPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\Azure_IABRS\\IABRS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
