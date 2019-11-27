@@ -14,6 +14,7 @@ namespace NAD_IABRS.Models
 
         [Required]
         public Person person { get; set; }
+
         public SelectList PersonList { get; set; }
 
         public string bio { get; set; }

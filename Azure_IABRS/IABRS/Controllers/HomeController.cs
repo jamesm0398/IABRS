@@ -13,10 +13,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using IABRS.Models;
 
 namespace IABRS.Controllers
 {
+   // [Authorize]
+    //[Authorize(Policy = "User")]
     public class HomeController : Controller
     {
         /// <summary>

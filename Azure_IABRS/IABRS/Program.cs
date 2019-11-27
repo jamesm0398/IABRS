@@ -7,6 +7,16 @@
  *  Name:           Program
  *  Purpose:        Handles the entry point of the application
  * ##############################################################*/
+
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * Used to build Code model from database 
+ * Scaffold-DbContext "Data Source=serverName;Initial Catalog=testsForNAD;User ID=sa;Password=password"  Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsFromDB
+ * 
+ * 
+ *!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+
 using System;
 using System.Collections.Generic;
 using System.IO;
