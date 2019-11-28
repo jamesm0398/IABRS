@@ -18,7 +18,7 @@ using IABRS.Models;
 
 namespace IABRS.Controllers
 {
-   // [Authorize]
+    [Authorize]
     //[Authorize(Policy = "User")]
     public class HomeController : Controller
     {
