@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IABRS.ModelsFromDB;
+using IABRS.Models;
 using IABRS.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -59,7 +59,18 @@ namespace IABRS
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<testsForNADContext>(item => item.UseSqlServer(Configuration.GetConnectionString("MyWebApiConection")));
 
-            services.AddDefaultIdentity<IdentityUser>().AddDefaultUI(Microsoft.AspNetCore.Identity.UI.UIFramework.Bootstrap4).AddEntityFrameworkStores<testsForNADContext>();
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequiredUniqueChars = 4;
+            }).AddEntityFrameworkStores<testsForNADContext>();
+
+            services.AddMvc(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
+
+          //  services.AddDefaultIdentity<IABRS.ModelsFromDB.IdentityUser>().AddDefaultUI(Microsoft.AspNetCore.Identity.UI.UIFramework.Bootstrap4).AddEntityFrameworkStores<testsForNADContext>();
 
     
 

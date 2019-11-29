@@ -8,6 +8,26 @@
     <StartupObject>IABRS.Program</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\Models\**" />
+    <Compile Remove="ModelsFromDB\**" />
+    <Compile Remove="testdb\**" />
+    <Content Remove="Migrations\Models\**" />
+    <Content Remove="ModelsFromDB\**" />
+    <Content Remove="testdb\**" />
+    <EmbeddedResource Remove="Migrations\Models\**" />
+    <EmbeddedResource Remove="ModelsFromDB\**" />
+    <EmbeddedResource Remove="testdb\**" />
+    <None Remove="Migrations\Models\**" />
+    <None Remove="ModelsFromDB\**" />
+    <None Remove="testdb\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20191129192141_addIdent.cs" />
+    <Compile Remove="Migrations\20191129192141_addIdent.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -19,11 +39,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

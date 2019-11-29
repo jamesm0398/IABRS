@@ -2,12 +2,15 @@ USE [testsForNAD]
 GO
 
 INSERT INTO [dbo].[Institution]
-           ([name])
+           ([name] ,[Domain])
      VALUES
-           ('Conestoga'),
-		   ('U Waterloo'),
-		   ('U Guelph')
+           ('Conestoga','conestogac.on.ca'),
+		   ('U Waterloo','uwaterloo.ca'),
+		   ('U Guelph', 'uoguelph.ca')
 GO
+
+
+
 
 USE [testsForNAD]
 GO
@@ -44,21 +47,7 @@ INSERT INTO [dbo].[Course]
 GO
 
 
-USE [testsForNAD]
-GO
 
-INSERT INTO [dbo].[User]
-           ([FName]
-           ,[LName]
-           ,[MName]
-           ,[UserName]
-           ,[Password])
-     VALUES
-           ('Bob','Dole', '', 'bDole1234', '1234'),
-		   ('Adam','Dolly', '', 'aDolly1234', '1234'),
-		   ('Jess','Talor', '', 'jtalor1234', '1234'),
-		   ('Joe','Smith', '', 'jsmith1234', '1234')
-GO
 
 USE [testsForNAD]
 GO
@@ -108,7 +97,3 @@ GO
 
 
 
-
-SELECT * FROM [dbo].[Institution]
-SELECT * FROM [dbo].[Book]
-SELECT * FROM [dbo].[Course]

@@ -18,14 +18,15 @@ using IABRS.Models;
 
 namespace IABRS.Controllers
 {
-    [Authorize]
-    //[Authorize(Policy = "User")]
+
+
     public class HomeController : Controller
     {
         /// <summary>
         /// Serves the home page
         /// </summary>
         /// <returns>IActionResult home page</returns>
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -34,6 +35,7 @@ namespace IABRS.Controllers
         /// Serves the Your profile page
         /// </summary>
         /// <returns>IActionResult Your profile page</returns>
+        
         public IActionResult YourProfile()
         {
             return View();
@@ -42,6 +44,7 @@ namespace IABRS.Controllers
         /// Serves the home page
         /// </summary>
         /// <returns>IActionResult home page</returns>
+       
         public IActionResult SellBooks()
         {
             return View();
@@ -50,6 +53,7 @@ namespace IABRS.Controllers
         /// Serves the Buy books page
         /// </summary>
         /// <returns>IActionResult Buy books page</returns>
+       
         public IActionResult BuyBooks()
         {
             return View();
@@ -58,6 +62,7 @@ namespace IABRS.Controllers
         /// Serves the Shopping cart page
         /// </summary>
         /// <returns>IActionResult Shopping cart page</returns>
+        
         public IActionResult ShoppingCart()
         {
             return View();

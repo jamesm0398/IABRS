@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IABRS.ModelsFromDB;
+using IABRS.Models;
 namespace IABRS.Controllers
 {
     public class Permission
@@ -25,7 +25,7 @@ namespace IABRS.Controllers
             foreach (GroupPermission perm in groupPermission)
             {
                 perm.Group = (Group)(from u in db.Group where u.Id == perm.GroupId select u).First();
-                perm.Permission = (ModelsFromDB.Permission)(from u in db.Permission where u.Id == perm.PermissionId select u).First();
+                perm.Permission = (Models.Permission)(from u in db.Permission where u.Id == perm.PermissionId select u).First();
                 Permission.Permissions.Add(perm);
             }
 
