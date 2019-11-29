@@ -33,7 +33,7 @@ namespace IABRS.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=JOHNCPLAPTOP;Initial Catalog=testsForNAD;User ID=sa;Password=password");
+                optionsBuilder.UseSqlServer("Data Source=JOHNCPLAPTOP;Initial Catalog=testsForNAD;User ID=sa;Password=mojoat13");
             }
         }
 

@@ -48,6 +48,7 @@ namespace IABRS.Controllers
         [AllowAnonymous]
         public async Task< IActionResult> Register(RegisterViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
