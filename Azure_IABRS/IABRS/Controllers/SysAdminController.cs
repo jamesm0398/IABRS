@@ -1,4 +1,5 @@
-﻿using IABRS.ViewModels;
+﻿using IABRS.Models;
+using IABRS.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,12 +11,15 @@ namespace IABRS.Controllers
 {
     public class SysAdminController:Controller
     {
-        public SysAdminController(RoleManager<IdentityRole> roleManager)
+        public SysAdminController(RoleManager<IdentityRole> roleManager,
+            UserManager<User> userManager)
         {
             RoleManager = roleManager;
+            UserManager = userManager;
         }
 
         public RoleManager<IdentityRole> RoleManager { get; }
+        public UserManager<User> UserManager { get; }
 
         [HttpGet]
         public IActionResult CreateRole()
@@ -34,7 +38,7 @@ namespace IABRS.Controllers
                 IdentityResult result = await RoleManager.CreateAsync(identityRole);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("ListRoles", "sysadmin");
                 }
 
                 foreach (IdentityError error in result.Errors)
@@ -46,5 +50,106 @@ namespace IABRS.Controllers
            
             return View(model);
         }
+        [HttpGet]
+        public IActionResult ListRoles()
+        {
+            var roles = RoleManager.Roles;
+            return View(roles);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditRole(string id)
+        {
+           var role = await RoleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var model = new EditRoleViewModel
+            {
+                Id = role.Id,
+                RoleName = role.Name
+            };
+
+            foreach (var user in UserManager.Users)
+            {
+                if (await UserManager.IsInRoleAsync(user, role.Name))
+                {
+                    model.Users.Add(user.UserName);
+                }
+            }
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRole(EditRoleViewModel rmodel)
+        {
+            var role = await RoleManager.FindByIdAsync(rmodel.Id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {rmodel.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                role.Name = rmodel.RoleName;
+                var result = await RoleManager.UpdateAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(rmodel);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditUsersInRole(string roleId)
+        {
+            ViewBag.roleId = roleId;
+
+            var role = await RoleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with id = {roleId} cannot be found";
+                return View("NotFound");
+            }
+
+            var model = new List<UserRoleViewModel>();
+
+            foreach (var user in UserManager.Users)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (await UserManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                model.Add(userRoleViewModel);
+            }
+            return View(model);
+        }
+
     }
 }

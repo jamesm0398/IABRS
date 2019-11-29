@@ -7,11 +7,7 @@ GO
 
 /****** Object:  Database [testsForNAD]    Script Date: 2019-11-29 3:02:03 PM ******/
 CREATE DATABASE [testsForNAD]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'testsForNAD', FILENAME = N'D:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\testsForNAD.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'testsForNAD_log', FILENAME = N'D:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\testsForNAD_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+
 GO
 
 ALTER DATABASE [testsForNAD] SET COMPATIBILITY_LEVEL = 140
