@@ -1,5 +1,6 @@
 ﻿using IABRS.Models;
 using IABRS.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,21 +10,34 @@ using System.Threading.Tasks;
 
 namespace IABRS.Controllers
 {
+
+
+    [Authorize(Roles = "SysAdmin")]
     public class SysAdminController:Controller
     {
+        static readonly string sysAdmin = "SysAdmin";
+       // static readonly string institutAdmin = "InstitutAdmin";
         public SysAdminController(RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager)
         {
             RoleManager = roleManager;
             UserManager = userManager;
+           
         }
 
         public RoleManager<IdentityRole> RoleManager { get; }
         public UserManager<User> UserManager { get; }
 
         [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = UserManager.Users;
+            return View(users);
+        }
+        [HttpGet]
         public IActionResult CreateRole()
         {
+           
             return View();
         }
         [HttpPost]
@@ -52,9 +66,13 @@ namespace IABRS.Controllers
         }
         [HttpGet]
         public IActionResult ListRoles()
-        {
-            var roles = RoleManager.Roles;
-            return View(roles);
+        {            
+            if(User.IsInRole(sysAdmin))
+            {
+                var roles = RoleManager.Roles;
+                return View(roles);
+            }
+            return View();
         }
 
         [HttpGet]
@@ -179,7 +197,26 @@ namespace IABRS.Controllers
                 {
                     continue;
                 }
+
+                if (result.Succeeded)
+                {
+                    if (i<(model.Count -1))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return RedirectToAction("EditRole", new { Id = roleId });
+                    }
+                }
             }
+            return RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
             return View();
         }
     }

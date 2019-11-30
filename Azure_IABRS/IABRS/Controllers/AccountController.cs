@@ -56,6 +56,10 @@ namespace IABRS.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("SysAdmin"))
+                    {
+                        return RedirectToAction("ListUsers", "SysAdmin");
+                    }
                    await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "home");
                 }
