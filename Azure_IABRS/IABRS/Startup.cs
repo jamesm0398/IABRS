@@ -70,6 +70,13 @@ namespace IABRS
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddXmlSerializerFormatters();
 
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "627011426493-l3q2005enlug9o628k0rfr2it3g15h8v.apps.googleusercontent.com";
+                options.ClientSecret = "-ydTTOIOiAV_cxFwnJ2ty1AX";
+            });
+
           //  services.AddDefaultIdentity<IABRS.ModelsFromDB.IdentityUser>().AddDefaultUI(Microsoft.AspNetCore.Identity.UI.UIFramework.Bootstrap4).AddEntityFrameworkStores<testsForNADContext>();
 
     
