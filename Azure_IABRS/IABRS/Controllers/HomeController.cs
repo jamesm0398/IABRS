@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using IABRS.Models;
+using IABRS.ViewModels;
 
 namespace IABRS.Controllers
 {
@@ -22,6 +23,11 @@ namespace IABRS.Controllers
 
     public class HomeController : Controller
     {
+
+        private readonly User _user;
+        private readonly CourseUser _courseUser;
+
+        
         /// <summary>
         /// Serves the home page
         /// </summary>
@@ -36,17 +42,31 @@ namespace IABRS.Controllers
         /// </summary>
         /// <returns>IActionResult Your profile page</returns>
         
-        public IActionResult YourProfile()
+        public IActionResult YourProfile(User uModel)
         {
+            ViewData["UserInfo"] = uModel;
             return View();
         }
         /// <summary>
         /// Serves the home page
         /// </summary>
         /// <returns>IActionResult home page</returns>
-       
-        public IActionResult SellBooks()
+
+        public IActionResult SellBooks(List<BookUsers> books)
         {
+            List<BookUsers> ownedBooks = new List<BookUsers>();
+
+            //add owned books to this list
+            foreach (var book in books)
+            {
+                if (book.Owned == true)
+                {
+                    ownedBooks.Add(book);
+                }
+            }
+            
+
+            ViewData["UsersBooks"] = ownedBooks;
             return View();
         }
         /// <summary>
@@ -54,8 +74,10 @@ namespace IABRS.Controllers
         /// </summary>
         /// <returns>IActionResult Buy books page</returns>
        
-        public IActionResult BuyBooks()
+        public IActionResult BuyBooks(List<BookUsers> books)
         {
+
+            ViewData["Books"] = books;
             return View();
         }
         /// <summary>
@@ -63,9 +85,29 @@ namespace IABRS.Controllers
         /// </summary>
         /// <returns>IActionResult Shopping cart page</returns>
         
-        public IActionResult ShoppingCart()
+        public IActionResult ShoppingCart(List<BookUsers> books)
         {
+            List<BookUsers> booksInCart = new List<BookUsers>();
+
+            foreach (var book in books)
+            {
+                if (book.InCart == true)
+                {
+                    booksInCart.Add(book);
+                }
+            }
+
+            if(booksInCart == null)
+            {
+                return View("No items in cart");
+            }
+
+            ViewData["Books"] = booksInCart;
             return View();
+
+
+
+
         }
         /// <summary>
         /// Serves the Privacy page

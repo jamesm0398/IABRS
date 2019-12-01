@@ -1,9 +1,16 @@
-﻿
+﻿@using IABRS.Models
+
+
 @{
     ViewData["Title"] = "YourProfile";
 }
 
-<h1>$[user name]'s Profile</h1>
+@{
+   var Userdata = (User)ViewData["UserInfo"];
+
+}
+
+<h1>@Userdata.Fname's Profile</h1>
 
 <div class="text-center">
 
@@ -22,5 +29,7 @@
     </li>
 
 </ul>
-<!--   </div>
-</div>-->
+<div class="text-left">
+    <h4>Name: @Userdata.Fname   @Userdata.Mname    @Userdata.Lname</h4>
+    <h4>Username: @Userdata.Username</h4>
+</div>

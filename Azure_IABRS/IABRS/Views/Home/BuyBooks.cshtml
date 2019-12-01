@@ -1,7 +1,56 @@
-﻿
+﻿@using IABRS.Models
+
+
 @{
     ViewData["Title"] = "BuyBooks";
 }
 
+
+@{
+    var Books = (List<BookUsers>)ViewData["Books"];
+
+}
+
+
 <h1>BuyBooks</h1>
+
+<div class="text-center">
+
+</div>
+<!--<div class="container">
+<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">-->
+<ul class="navbar-nav flex-grow-1">
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Your Books</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="YourProfile">Your Courses</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SellBooks">Settings</a>
+    </li>
+
+</ul>
+
+<!--Table showing list of books that the user has and can sell-->
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN</th>
+        <th>Picture</th>
+    </tr>
+    @foreach (var item in Books)
+    {
+        <tr>
+            <td>@item.Book.Title</td>
+            <td>@item.Book.Author</td>
+            <td>@item.ID</td>
+            <td><input type="button" value="Put Up For Sale" /></td>
+        </tr>
+    }
+
+
+</table>
+
 
