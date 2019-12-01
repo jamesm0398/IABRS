@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Class: Course
+//Summary: This class contains the getters/setters for various attributes of a course
+
 namespace IABRS.Models
 {
     public partial class Course

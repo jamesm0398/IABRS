@@ -1,5 +1,8 @@
 using System;
 
+//Class: ErrorViewModel
+//Summary: This class contains information about an error that has occured
+
 namespace IABRS.Models
 {
     public class ErrorViewModel

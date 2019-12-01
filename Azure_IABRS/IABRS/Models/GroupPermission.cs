@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Class: GroupPermission
+//Summary: This class contains the getters/setters for various attributes of a group and its permissions
+
 namespace IABRS.Models
 {
     public partial class GroupPermission

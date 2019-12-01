@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+//Class: Group
+//Summary: This class contains the getters/setters for various attributes of a group, each user will be in a different permission group
+
 
 namespace IABRS.Models
 {
