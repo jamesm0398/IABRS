@@ -18,6 +18,8 @@ namespace IABRS.Models
 
         public double Price { get; set; }
 
+        public string ISBN { get; set; }
+
         public virtual ICollection<BookCourse> BookCourse { get; set; }
         public virtual ICollection<BookUsers> BookUsers { get; set; }
     }

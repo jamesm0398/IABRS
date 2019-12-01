@@ -26,6 +26,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20191129192141_addIdent.cs" />
     <Compile Remove="Migrations\20191129192141_addIdent.Designer.cs" />
+    <Compile Remove="Migrations\20191201024823_merge.cs" />
+    <Compile Remove="Migrations\20191201024823_merge.Designer.cs" />
   </ItemGroup>
 
 

@@ -73,8 +73,8 @@ namespace IABRS
 
             services.AddAuthentication().AddGoogle(options =>
             {
-                options.ClientId = "627011426493-l3q2005enlug9o628k0rfr2it3g15h8v.apps.googleusercontent.com";
-                options.ClientSecret = "-ydTTOIOiAV_cxFwnJ2ty1AX";
+                options.ClientId = "627011426493-l3q2005enlug9o628k0rfr2it3g15h8v.apps.googleusercontent.com";//627011426493-2fc5j7gij0eu24qhnus1cqsdgf196in6.apps.googleusercontent.com";// 
+                options.ClientSecret = "-ydTTOIOiAV_cxFwnJ2ty1AX";//ZwaRpE-M78K0c_El_yeVxi6n";// 
             });
 
           //  services.AddDefaultIdentity<IABRS.ModelsFromDB.IdentityUser>().AddDefaultUI(Microsoft.AspNetCore.Identity.UI.UIFramework.Bootstrap4).AddEntityFrameworkStores<testsForNADContext>();
