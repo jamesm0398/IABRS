@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+//Class: testsForNADContext
+//Summary: This class will retreive information from the database relating to each of the models.
+
 namespace IABRS.Models
 {
     public partial class testsForNADContext : IdentityDbContext

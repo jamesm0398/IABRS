@@ -1,8 +1,20 @@
-﻿@{
+﻿@using IABRS.Models
+
+<!--File: Index.cshtml
+    Purpose: This is the entry point of the website, showing a simple welcome message-->
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+
+@{
+    var InstitutionData = (Institution)ViewData["instInfo"];
+
+}
+
 <div class="text-center">
-    <h1 class="display-4">Welcome to $[institution name]'s book store</h1>
+    <h1 class="display-4">Welcome to @InstitutionData.Name's book store</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

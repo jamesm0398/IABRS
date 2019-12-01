@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Class: Institution
+//Summary: This class contains the getters/setters for various attributes of an institution
+
 namespace IABRS.Models
 {
     public partial class Institution

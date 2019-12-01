@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Class: CourseUser
+//Summary: This class contains the getters/setters for various attributes of a course's user, i.e. what course is the user enrolled in?
+
 namespace IABRS.Models
 {
     public partial class CourseUser

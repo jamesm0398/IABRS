@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Class: Book
+//Summary: This class contains the getters/setters for various attributes of a book
+
 namespace IABRS.Models
 {
     public partial class Book

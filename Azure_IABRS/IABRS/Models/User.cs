@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 
+//Class: User
+//Summary: This class contains the getters/setters for various attributes of a user, such as their name, username and password, as well as what books they have, what courses they are in and their user group
+
 namespace IABRS.Models
 {
     public partial class User :IdentityUser

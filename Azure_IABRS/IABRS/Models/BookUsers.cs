@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Class: BookUsers
+//Summary: This class contains the getters/setters for various attributes of a book's user, i.e. how is the book related to the user, do they own it, is it in their cart, etc
+
 namespace IABRS.Models
 {
     public partial class BookUsers

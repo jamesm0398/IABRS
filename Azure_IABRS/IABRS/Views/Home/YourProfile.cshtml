@@ -1,5 +1,7 @@
 ﻿@using IABRS.Models
 
+<!--File: YourProfile.cshtml
+    Purpose: This is the user's profile page displaying their full name and username-->
 
 @{
     ViewData["Title"] = "YourProfile";
@@ -7,6 +9,7 @@
 
 @{
    var Userdata = (User)ViewData["UserInfo"];
+    var courseData = (List<CourseUser>)ViewData["courseInfo"];
 
 }
 
@@ -30,6 +33,27 @@
 
 </ul>
 <div class="text-left">
-    <h4>Name: @Userdata.Fname   @Userdata.Mname    @Userdata.Lname</h4>
+    <h4>Name: @Userdata.Fname &nbsp;   @Userdata.Mname &nbsp;   @Userdata.Lname</h4>
     <h4>Username: @Userdata.Username</h4>
+</div>
+
+<!--Display the courses that the user is in-->
+<div class="text-left">
+    <h4>Your Courses: </h4>
+    <table>
+        <tr>
+            <th>Code:</th>
+            <th>Name:</th>
+        </tr>
+        @foreach (var course in courseData)
+        {
+            <tr>
+                <td>@course.Course.Code</td>
+                <td>@course.Course.Name</td>
+            </tr>
+        }
+
+    </table>
+
+   
 </div>
