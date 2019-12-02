@@ -13049,29 +13049,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\JohnCPLaptop\\.nuget\\packages\\": {},
+    "C:\\Users\\james\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\Azure_IABRS\\IABRS\\IABRS.csproj",
+      "projectUniqueName": "C:\\Users\\james\\Desktop\\IABRS\\Azure_IABRS\\IABRS\\IABRS.csproj",
       "projectName": "IABRS",
-      "projectPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\Azure_IABRS\\IABRS\\IABRS.csproj",
-      "packagesPath": "C:\\Users\\JohnCPLaptop\\.nuget\\packages\\",
-      "outputPath": "D:\\conestoga\\SoftwareEngTech\\Repo\\school_code\\Semester5\\Network Application Design\\Assignment5_Prof_of_Con\\working_Copy\\IABRS\\Azure_IABRS\\IABRS\\obj\\",
+      "projectPath": "C:\\Users\\james\\Desktop\\IABRS\\Azure_IABRS\\IABRS\\IABRS.csproj",
+      "packagesPath": "C:\\Users\\james\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\james\\Desktop\\IABRS\\Azure_IABRS\\IABRS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\JohnCPLaptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\james\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -13126,10 +13128,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

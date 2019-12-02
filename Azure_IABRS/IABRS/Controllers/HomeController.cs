@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using IABRS.Models;
 using IABRS.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace IABRS.Controllers
 {
@@ -26,6 +27,8 @@ namespace IABRS.Controllers
 
         private readonly User _user;
         private readonly CourseUser _courseUser;
+        public UserManager<User> userManager { get; }
+
 
         
         /// <summary>
@@ -52,19 +55,20 @@ namespace IABRS.Controllers
         /// </summary>
         /// <returns>IActionResult home page</returns>
 
-        public IActionResult SellBooks(List<BookUsers> books)
+        public async Task<IActionResult> SellBooksAsync()
         {
+            var curUser = await userManager.GetUserAsync(HttpContext.User);
             List<BookUsers> ownedBooks = new List<BookUsers>();
+            testsForNADContext db = new testsForNADContext();
+            IQueryable<BookUsers> bookUsers = from u in db.BookUsers where u.UserId == curUser.UserId select u;
 
-            //add owned books to this list
-            foreach (var book in books)
+            foreach (BookUsers book in bookUsers)
             {
-                if (book.Owned == true)
-                {
-                    ownedBooks.Add(book);
-                }
+                book.Book = (Book)(from u in db.BookUsers where u.UserId == curUser.UserId select u);
+                ownedBooks.Add(book);
             }
-            
+
+           
 
             ViewData["UsersBooks"] = ownedBooks;
             return View();
@@ -73,9 +77,18 @@ namespace IABRS.Controllers
         /// Serves the Buy books page
         /// </summary>
         /// <returns>IActionResult Buy books page</returns>
-       
-        public IActionResult BuyBooks(List<BookUsers> books)
+
+        public IActionResult BuyBooks()
         {
+            List<Book> books = new List<Book>();
+            testsForNADContext db = new testsForNADContext();
+            IQueryable<Book> booksIQ = from u in db.Book select u;
+
+            foreach(Book item in booksIQ)
+            {
+                books.Add(item);
+            }
+
 
             ViewData["Books"] = books;
             return View();
@@ -85,17 +98,20 @@ namespace IABRS.Controllers
         /// </summary>
         /// <returns>IActionResult Shopping cart page</returns>
         
-        public IActionResult ShoppingCart(List<BookUsers> books)
+        public async Task<IActionResult> ShoppingCartAsync()
         {
+            var curUser = await userManager.GetUserAsync(HttpContext.User);
             List<BookUsers> booksInCart = new List<BookUsers>();
+            testsForNADContext db = new testsForNADContext();
+            IQueryable<BookUsers> bookUsers = from u in db.BookUsers select u;
 
-            foreach (var book in books)
+
+            foreach(BookUsers item in bookUsers)
             {
-                if (book.InCart == true)
-                {
-                    booksInCart.Add(book);
-                }
+                item.Book =(Book) (from u in db.BookUsers where u.InCart == true && u.UserId == curUser.UserId select u);
+                booksInCart.Add(item);
             }
+
 
             if(booksInCart == null)
             {
