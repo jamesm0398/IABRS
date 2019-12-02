@@ -7,7 +7,7 @@
 
 
 @{
-    var Books = (List<BookUsers>)ViewData["Books"];
+    var Books = (List<Book>)ViewData["Books"];
 
 }
 
@@ -43,8 +43,8 @@
     @foreach (var item in Books)
     {
         <tr>
-            <td>@item.Book.Title</td>
-            <td>@item.Book.Author</td>
+            <td>@item.Title</td>
+            <td>@item.Author</td>
             <td>@item.BookId</td>
             <td><input type="button" value="Put Up For Sale" /></td>
         </tr>
