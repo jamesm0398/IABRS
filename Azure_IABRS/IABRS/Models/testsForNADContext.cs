@@ -30,6 +30,7 @@ namespace IABRS.Models
         public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserGroup> UserGroup { get; set; }
+        public virtual DbSet<InstitutionUser> InstitutionUser { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -183,7 +184,7 @@ namespace IABRS.Models
 
                 entity.Property(e => e.UserName)
                     .IsRequired()
-                    .HasMaxLength(30);
+                    .HasMaxLength(40);
             });
 
             modelBuilder.Entity<UserGroup>(entity =>

@@ -3,6 +3,7 @@ using IABRS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,12 @@ using System.Threading.Tasks;
 namespace IABRS.Controllers
 {
 
-
-    [Authorize(Roles = "SysAdmin")]
+    [Authorize(Roles = "SysAdmin,InstituteAdmin")]   
     public class SysAdminController:Controller
     {
         static readonly string sysAdmin = "SysAdmin";
-       // static readonly string institutAdmin = "InstitutAdmin";
+        testsForNADContext dbCon = new testsForNADContext();
+      
         public SysAdminController(RoleManager<IdentityRole> roleManager,
             UserManager<User> userManager, ILogger<SysAdminController> logger)
         {
@@ -33,6 +34,7 @@ namespace IABRS.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
             
@@ -66,6 +68,7 @@ namespace IABRS.Controllers
             }
 
         [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             Logger.Log(LogLevel.Information, "Attempting to Delete user Id: {0} , UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
@@ -79,6 +82,8 @@ namespace IABRS.Controllers
             }
             else
             {
+                //dbCon.InstitutionUser.FromSql("DELETE FROM [dbo].[InstitutionUser] iu WHERE iu.UserId = {0}", id);
+                dbCon.SaveChanges();
                 var result = await UserManager.DeleteAsync(user);
 
                 if (result.Succeeded)
@@ -97,6 +102,7 @@ namespace IABRS.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await RoleManager.FindByIdAsync(id);
@@ -127,6 +133,7 @@ namespace IABRS.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
         public IActionResult ListUsers()
         {
             Logger.Log(LogLevel.Information, "User {0} Accessed ListUsers, UserIsAdmin: {1}", User.ToString(), User.IsInRole(sysAdmin));
@@ -136,6 +143,7 @@ namespace IABRS.Controllers
 
 
         [HttpGet]
+        //[Authorize(Roles = "SysAdmin,InstituteAdmin")]
         public async Task<IActionResult> EditUser(string id)
         {
             var user = await UserManager.FindByIdAsync(id);
@@ -167,6 +175,7 @@ namespace IABRS.Controllers
 
 
         [HttpPost]
+       // [Authorize(Roles = "SysAdmin, InstituteAdmin")]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
         {
             Logger.Log(LogLevel.Information, "Attempting to edit user Id: {0} , UserIsAdmin: {1}", model.Id, User.IsInRole(sysAdmin));
@@ -188,6 +197,11 @@ namespace IABRS.Controllers
 
                 if (result.Succeeded)
                 {
+                    
+                    if (User.IsInRole("InstituteAdmin"))
+                    {
+                        return RedirectToAction("ListUsers", "InstitutAdmin");
+                    }
                     return RedirectToAction("ListUsers");
                 }
 
@@ -200,14 +214,162 @@ namespace IABRS.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
+        public async Task<IActionResult> DeleteInstitution(int id)
+        {
+            Logger.Log(LogLevel.Information, "Attempting to Delete Institution Id: {0} , UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
+            var inst = await dbCon.Institution.FindAsync(id);
+
+            if (inst == null)
+            {
+                Logger.Log(LogLevel.Error, "Attempting to Delete Institution Id: {0} Failed to find user, UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
+                ViewBag.ErrorMessage = $"Institution with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                try
+                {
+                    dbCon.Institution.Remove(inst);
+                    if (dbCon.SaveChanges() == 1)
+                    {
+                        Logger.Log(LogLevel.Error, "Delete Institution Id: {0} Institution deleted, UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
+                        return RedirectToAction("ListInstitutions");
+                    }
+
+                    
+                    ModelState.AddModelError("", "Could not delete Institution");
+                    
+
+                    return View("ListUsers");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Could not delete Institution Error:" + ex.Message);
+                    return View();
+                }
+
+            }
+        }
 
         [HttpGet]
+        public IActionResult EditInstitution(int id)
+        {
+            var inst = dbCon.Institution.Find(id);// UserManager.FindByIdAsync(id);
+            Logger.Log(LogLevel.Information, "Attempting to edit Institution Id: {0} , UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
+            if (inst == null)
+            {
+                Logger.Log(LogLevel.Error, "Attempting to edit Institution Id: {0} Failed to find Institution, UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
+                ViewBag.ErrorMessage = $"Institution with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            var courses = dbCon.Course.Where(x => x.InstitutionId == id).ToList();
+
+            var model = new EditInstitutionViewModel
+            {
+                Id = inst.Id,
+                Domian = inst.Domain,
+                Name = inst.Name,
+                Courses = courses
+            };
+            Logger.Log(LogLevel.Information, "Institution user Id: {0} , UserIsAdmin: {1}", id, User.IsInRole(sysAdmin));
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditInstitution(EditInstitutionViewModel model)
+        {
+            Logger.Log(LogLevel.Information, "Attempting to edit Institution Id: {0} , UserIsAdmin: {1}", model.Id, User.IsInRole(sysAdmin));
+            var inst = await dbCon.Institution.FindAsync(model.Id);
+
+            if (inst == null)
+            {
+                Logger.Log(LogLevel.Error, "Attempting to edit Institution Id: {0} Failed to find Institution, UserIsAdmin: {1}", model.Id, User.IsInRole(sysAdmin));
+                ViewBag.ErrorMessage = $"Institution with Id = {model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                inst.Domain = model.Domian;
+                inst.Name = model.Name;
+              
+                var result = dbCon.Institution.Update(inst);
+                
+                if (dbCon.SaveChanges() == 1)
+                {
+                    Logger.Log(LogLevel.Information, "Edited Institution Id: {0} , UserIsAdmin: {1}", model.Id, User.IsInRole(sysAdmin));
+                    return RedirectToAction("ListInstitutions");
+                }
+
+                ModelState.AddModelError("", "Could not save entry. Error saving to data base");
+                
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
+        public IActionResult ListInstitutions()
+        {
+            Logger.Log(LogLevel.Information, "User {0} Accessed ListInstitutions, UserIsAdmin: {1}", User.ToString(), User.IsInRole(sysAdmin));
+            var users = dbCon.Institution;
+            return View(users);
+        }
+        [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
+        public IActionResult RegisterInstitution()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
+        public IActionResult RegisterInstitution(CreateInstitutionViewModel model)
+        {
+            Logger.Log(LogLevel.Information, "Accessed Register Institution, UserIsAdmin: {1}", User.IsInRole(sysAdmin));
+            if (ModelState.IsValid)
+            {
+                Institution inst = new Institution
+                {
+                    Name = model.InstituteName,
+                    Domain = model.InstituteDomain
+                };
+
+                List<Institution> res = dbCon.Institution.Where(x => x.Name == inst.Name && x.Domain == inst.Domain).ToList();
+              
+                if (res.Count == 0)
+                {
+                    var added =dbCon.Institution.Add(inst);
+                    if (dbCon.SaveChanges() == 1)
+                    {
+                        Logger.Log(LogLevel.Information, "Register intitution model was Created, UserIsAdmin: {1}", User.IsInRole(sysAdmin));
+                        return RedirectToAction("ListInstitutions", "sysadmin");
+                    }
+                    ModelState.AddModelError("", "Could not save entry. Error saving to data base");
+                    return View(model);
+                }
+
+                
+                ModelState.AddModelError("", "This institution already exists with this domain");
+                
+            }
+            Logger.Log(LogLevel.Error, "Register intitution model was not valid, UserIsAdmin: {1}", User.IsInRole(sysAdmin));
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
         public IActionResult CreateRole()
         {
            
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
         public async Task< IActionResult> CreateRole(CreateRoleViewModel model)
         {
             Logger.Log(LogLevel.Information, "Accessed CreateRole, UserIsAdmin: {1}",  User.IsInRole(sysAdmin));
@@ -235,6 +397,7 @@ namespace IABRS.Controllers
             return View(model);
         }
         [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
         public IActionResult ListRoles()
         {
             Logger.Log(LogLevel.Information, "Accessed ListRoles, UserIsAdmin: {1}", User.IsInRole(sysAdmin));
@@ -247,6 +410,7 @@ namespace IABRS.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> EditRole(string id)
         {
            var role = await RoleManager.FindByIdAsync(id);
@@ -277,6 +441,7 @@ namespace IABRS.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel rmodel)
         {
 
@@ -307,6 +472,7 @@ namespace IABRS.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             ViewBag.roleId = roleId;
@@ -348,6 +514,7 @@ namespace IABRS.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> ManageUserRoles(string userId)
         {
             ViewBag.userId = userId;
@@ -387,6 +554,7 @@ namespace IABRS.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "SysAdmin")]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
             var role = await RoleManager.FindByIdAsync(roleId);

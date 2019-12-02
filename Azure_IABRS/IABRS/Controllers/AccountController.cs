@@ -18,6 +18,8 @@ namespace IABRS.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
+        testsForNADContext dbCOn = new testsForNADContext();
+
         public AccountController(UserManager<User> userManager,
             SignInManager<User> signInManager)
         {
@@ -44,7 +46,33 @@ namespace IABRS.Controllers
             return Json($"Eamil {email} is already in use");
         }
 
+        private async Task<bool> CreateIntitutionUserEntry(RegisterViewModel model)
+        {
+            bool result = false;
+            //get user institution domain
+            string[] userSplitn = model.Email.Split('@');
+            string userDomain = string.Empty;
+            if (userSplitn != null && userSplitn.Count() == 2)
+            {
+                userDomain = userSplitn[1].ToUpper();
+            }
+            List<Institution> insts = dbCOn.Institution.Where(x => x.Domain.ToUpper() == userDomain).ToList();
+            List<User> newUser = dbCOn.User.Where(x => x.NormalizedEmail == model.Email.ToUpper()).ToList();
+            if (insts.Count > 0 && newUser.Count > 0)
+            {
+                InstitutionUser institutionUser = new InstitutionUser
+                {
+                    InstitutionId = insts[0].Id,
+                    UserId = newUser[0].Id
+                };
+                await dbCOn.InstitutionUser.AddAsync(institutionUser);
+                await dbCOn.SaveChangesAsync();
+                
 
+                result = true;
+            }
+           return result;
+        }
        [HttpPost]
         [AllowAnonymous]
         public async Task< IActionResult> Register(RegisterViewModel model)
@@ -57,12 +85,15 @@ namespace IABRS.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (signInManager.IsSignedIn(User) && User.IsInRole("SysAdmin"))
+                    if (await CreateIntitutionUserEntry(model))
                     {
-                        return RedirectToAction("ListUsers", "SysAdmin");
-                    }
-                   await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
+                        if (signInManager.IsSignedIn(User) && User.IsInRole("SysAdmin"))
+                        {
+                            return RedirectToAction("ListUsers", "SysAdmin");
+                        }
+                        await signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("index", "home");
+                    }                    
                 }
 
                 foreach (var error in result.Errors)
@@ -188,12 +219,14 @@ namespace IABRS.Controllers
 
                         await userManager.CreateAsync(user);
                     }
+                    if (await CreateIntitutionUserEntry(new RegisterViewModel { Email = user.Email }))
+                    {
+                        // Add a login (i.e insert a row for the user in AspNetUserLogins table)
+                        await userManager.AddLoginAsync(user, info);
+                        await signInManager.SignInAsync(user, isPersistent: false);
 
-                    // Add a login (i.e insert a row for the user in AspNetUserLogins table)
-                    await userManager.AddLoginAsync(user, info);
-                    await signInManager.SignInAsync(user, isPersistent: false);
-
-                    return LocalRedirect(returnUrl);
+                        return LocalRedirect(returnUrl);
+                    }
                 }
 
                 // If we cannot find the user email we cannot continue

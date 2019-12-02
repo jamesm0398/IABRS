@@ -178,6 +178,25 @@ namespace IABRS.Migrations
                     b.ToTable("Institution");
                 });
 
+            modelBuilder.Entity("IABRS.Models.InstitutionUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InstitutionId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstitutionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InstitutionUser");
+                });
+
             modelBuilder.Entity("IABRS.Models.Permission", b =>
                 {
                     b.Property<int>("Id")
@@ -300,7 +319,7 @@ namespace IABRS.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(30);
+                        .HasMaxLength(40);
 
                     b.HasKey("Id");
 
@@ -387,6 +406,10 @@ namespace IABRS.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<int?>("InstitutionId");
+
+                    b.HasIndex("InstitutionId");
+
                     b.HasDiscriminator().HasValue("User");
                 });
 
@@ -452,6 +475,18 @@ namespace IABRS.Migrations
                         .HasConstraintName("FK_GroupPermission_Permission");
                 });
 
+            modelBuilder.Entity("IABRS.Models.InstitutionUser", b =>
+                {
+                    b.HasOne("IABRS.Models.Institution", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IABRS.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("IABRS.Models.UserGroup", b =>
                 {
                     b.HasOne("IABRS.Models.Group", "Group")
@@ -508,6 +543,13 @@ namespace IABRS.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("IABRS.Models.User", b =>
+                {
+                    b.HasOne("IABRS.Models.Institution", "Institution")
+                        .WithMany("Users")
+                        .HasForeignKey("InstitutionId");
                 });
 #pragma warning restore 612, 618
         }

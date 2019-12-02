@@ -11,6 +11,7 @@ namespace IABRS.Models
         public Institution()
         {
             Course = new HashSet<Course>();
+            Users = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,6 @@ namespace IABRS.Models
         public string Domain { get; set; }
 
         public virtual ICollection<Course> Course { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
