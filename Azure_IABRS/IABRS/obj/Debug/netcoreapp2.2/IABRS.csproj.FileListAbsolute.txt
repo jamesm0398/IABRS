@@ -81,5 +81,4 @@ D:\conestoga\SoftwareEngTech\Repo\school_code\Semester5\Network Application Desi
 D:\conestoga\SoftwareEngTech\Repo\school_code\Semester5\Network Application Design\Assignment5_Prof_of_Con\working_Copy\IABRS\Azure_IABRS\IABRS\obj\Debug\netcoreapp2.2\Razor\Views\SysAdmin\ListInstitutions.g.cshtml.cs
 D:\conestoga\SoftwareEngTech\Repo\school_code\Semester5\Network Application Design\Assignment5_Prof_of_Con\working_Copy\IABRS\Azure_IABRS\IABRS\obj\Debug\netcoreapp2.2\Razor\Views\SysAdmin\RegisterInstitution.g.cshtml.cs
 D:\conestoga\SoftwareEngTech\Repo\school_code\Semester5\Network Application Design\Assignment5_Prof_of_Con\working_Copy\IABRS\Azure_IABRS\IABRS\obj\Debug\netcoreapp2.2\Razor\Views\SysAdmin\EditInstitution.g.cshtml.cs
-D:\conestoga\SoftwareEngTech\Repo\school_code\Semester5\Network Application Design\Assignment5_Prof_of_Con\working_Copy\IABRS\Azure_IABRS\IABRS\obj\Debug\netcoreapp2.2\IABRS.csprojAssemblyReference.cache
 D:\conestoga\SoftwareEngTech\Repo\school_code\Semester5\Network Application Design\Assignment5_Prof_of_Con\working_Copy\IABRS\Azure_IABRS\IABRS\obj\Debug\netcoreapp2.2\Razor\Views\InstitutAdmin\ListUsers.g.cshtml.cs
