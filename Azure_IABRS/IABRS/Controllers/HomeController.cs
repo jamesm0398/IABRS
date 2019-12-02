@@ -45,9 +45,15 @@ namespace IABRS.Controllers
         /// </summary>
         /// <returns>IActionResult Your profile page</returns>
         
-        public IActionResult YourProfile(User uModel)
+        public async Task<IActionResult> YourProfileAsync()
         {
-            ViewData["UserInfo"] = uModel;
+            testsForNADContext db = new testsForNADContext();
+            var curUser = await userManager.GetUserAsync(HttpContext.User);
+
+            IQueryable<User> user = from u in db.User select u;
+            
+
+            ViewData["UserInfo"] = user;
             return View();
         }
         /// <summary>
@@ -60,11 +66,11 @@ namespace IABRS.Controllers
             var curUser = await userManager.GetUserAsync(HttpContext.User);
             List<BookUsers> ownedBooks = new List<BookUsers>();
             testsForNADContext db = new testsForNADContext();
-            IQueryable<BookUsers> bookUsers = from u in db.BookUsers where u.UserId == curUser.Id select u;
+            IQueryable<BookUsers> bookUsers = from u in db.BookUsers where u.UserId == curUser.UserId select u;
 
             foreach (BookUsers book in bookUsers)
             {
-                book.Book = (Book)(from u in db.BookUsers where u.UserId == curUser.Id select u);
+                book.Book = (Book)(from u in db.BookUsers where u.UserId == curUser.UserId select u);
                 ownedBooks.Add(book);
             }
 
@@ -108,7 +114,7 @@ namespace IABRS.Controllers
 
             foreach(BookUsers item in bookUsers)
             {
-                item.Book =(Book) (from u in db.BookUsers where u.InCart == true && u.UserId == curUser.Id select u);
+                item.Book =(Book) (from u in db.BookUsers where u.InCart == true && u.UserId == curUser.UserId select u);
                 booksInCart.Add(item);
             }
 

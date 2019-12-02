@@ -9,7 +9,7 @@
 
 @{
    var Userdata = (User)ViewData["UserInfo"];
-    var courseData = (List<CourseUser>)ViewData["courseInfo"];
+  //  var courseData = (List<CourseUser>)ViewData["courseInfo"];
 
 }
 
@@ -33,12 +33,12 @@
 
 </ul>
 <div class="text-left">
-    <!--<h4>Name: Userdata.Fname &nbsp;   Userdata.Mname &nbsp;   Userdata.Lname</h4>-->
+    <h4>Name: Userdata.Fname &nbsp;   Userdata.Mname &nbsp;   Userdata.Lname</h4>
     <h4>Username: @Userdata.UserName</h4>
 </div>
 
 <!--Display the courses that the user is in-->
-<div class="text-left">
+@*<div class="text-left">
     <h4>Your Courses: </h4>
     <table>
         <tr>
@@ -56,4 +56,4 @@
     </table>
 
    
-</div>
+</div>*@
